@@ -1,0 +1,65 @@
+const express = require('express');
+const app = express();
+
+app.listen(3000, (req,res)=>{
+    console.log("server is listening to port 3000");
+    
+   
+})
+
+const path = require('path');
+app.set("view engine", "ejs" )
+app.set("views", path.join(__dirname,"views"))
+
+// ----------------------------------------------------------------------------------
+
+const mongoose = require('mongoose');
+
+async function main(){
+
+    await mongoose.connect('mongodb://127.0.0.1:27017/wanderlust');
+}
+
+main()
+.then((res)=>{
+    console.log("Connection is Working");
+    
+})
+.catch((err)=>{
+    console.log(err);
+    
+})
+
+const Listing = require("./models/listing.js");
+
+
+app.get("/listings",async (req,res)=>{
+   const allListings = await Listing.find({})
+    // .then((res)=>{
+    //     console.log(res);
+    // })
+    // .catch((err)=>{
+    //     console.log("Error Occured:",err);
+        
+    // })
+
+    res.render("listings/index.ejs" ,{ allListings })
+})
+
+
+
+// app.get("/testListing",async (req,res)=>{
+    
+//     let sampleListing = new Listing({
+//   
+
+
+// -------------------------------------------------------------------------------------
+
+
+app.get("/", (req,res)=>{
+    
+    res.send("Root Directory")
+    
+})
+
