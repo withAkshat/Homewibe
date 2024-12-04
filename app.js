@@ -11,30 +11,29 @@ const path = require('path');
 app.set("view engine", "ejs" )
 app.set("views", path.join(__dirname,"views"))
 
-// ----------------------------------------------------------------------------------
+app.use(express.urlencoded({extended:true}))
 
 const mongoose = require('mongoose');
 
 async function main(){
-
     await mongoose.connect('mongodb://127.0.0.1:27017/wanderlust');
 }
 
 main()
 .then((res)=>{
     console.log("Connection is Working");
-    
 })
 .catch((err)=>{
-    console.log(err);
-    
+    console.log(err);    
 })
 
 const Listing = require("./models/listing.js");
+const { log } = require('console');
 
+// ----------------------------------------------------------------------------------
 
 app.get("/listings",async (req,res)=>{
-   const allListings = await Listing.find({})
+    const allListings = await Listing.find({})
     // .then((res)=>{
     //     console.log(res);
     // })
@@ -44,8 +43,27 @@ app.get("/listings",async (req,res)=>{
     // })
 
     res.render("listings/index.ejs" ,{ allListings })
+});
+
+
+// Read or Show Route
+
+app.get("/listings/:id", async (req,res)=>{
+    let { id } = req.params;
+    let  indData = await Listing.findById(id);
+    
+    
+    // res.send("working");
+    res.render("listings/show.ejs" , { indData } )
 })
 
+
+// New Route
+
+app.get("/listings/new", async (req,res)=>{
+    
+    res.render("listings/new.ejs")
+})
 
 
 // app.get("/testListing",async (req,res)=>{
