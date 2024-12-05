@@ -8,7 +8,22 @@
 <body>
     <form method="post" action="/listings">
 
-        <input type="text"><input type="text"><input type="text"><input type="text">
+        <input type="text" name="listing[title]" placeholder="enter title">
+
+        <br><br>
+        <textarea name="listing[description]" placeholder="enter description" ></textarea>
+        <br><br>
+        <input type="text" name="listing[image][filename]" placeholder="Listing image" >
+        <br><br>
+        <input type="text" name="listing[image][url]" placeholder="Image Url/link">
+        <br><br>
+        <input type="number" name="listing[price]" placeholder="Price">
+        <br><br>
+        <input type="text" name="listing[location]" placeholder="Location">
+        <br><br>
+        <input type="text" name="listing[country]" placeholder="country">
+        <br><br>
+        <button type="Submit">Submit</button>
     </form>
 </body>
-</html>
+</html> 
