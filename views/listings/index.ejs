@@ -1,22 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hotel Only</title>
 </head>
+
 <body>
     <h1>All listings</h1>
     <form method="GET" action="/listings/new">
         <button>Create New Listing</button>
     </form>
     <%for(listing of allListings){ %>
-       
-           <li>
-              <a href="/listings/<%= listing._id %>"> <%= listing.title %> </a> 
-           </li>
-       
-    <% } %>
+
+        <li>
+            <a href="/listings/<%= listing._id %>">
+                <%= listing.title %>
+            </a>
+        </li>
+
+        <% } %>
 
 </body>
+
 </html>

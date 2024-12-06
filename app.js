@@ -13,6 +13,8 @@ app.set("views", path.join(__dirname, "views"))
 
 app.use(express.urlencoded({ extended: true }))
 
+// --------------------------------------------------------------------------------------
+
 const mongoose = require('mongoose');
 
 async function main() {
@@ -28,10 +30,14 @@ main()
     })
 
 const Listing = require("./models/listing.js");
-const { log } = require('console');
-const { monitorEventLoopDelay } = require('perf_hooks');
+
 
 // ----------------------------------------------------------------------------------
+
+let methodOverride = require('method-override')
+app.use(methodOverride('_method'))
+
+// ------------------------------------------------------------------------------------
 
 app.get("/listings", async (req, res) => {
     const allListings = await Listing.find({})
@@ -81,13 +87,40 @@ app.get("/listings/:id", async (req, res) => {
 })
 
 
+// Edit Route
 
-// app.get("/testListing",async (req,res)=>{
+app.get("/listings/:id/edit", async(req,res)=>{
+    let { id } = req.params;
 
-//     let sampleListing = new Listing({
-//   
+    let listingData = await Listing.findById(id);
+//   console.log(listingData);
+    
+     res.render("listings/edit.ejs", { listingData });
+})
 
 
+//  Update Route
+
+app.put("/listings/:id", async (req,res)=>{
+
+    let { id } = req.params;
+    // console.log({...req.body.listing });
+    
+    let upData = await Listing.findByIdAndUpdate( id ,{...req.body.listing });
+    console.log(upData);
+    
+    res.redirect(`/listings/${id}`)
+    
+})
+
+
+app.delete("/listings/:id",async (req,res)=>{
+    let { id } = req.params;
+    let delData = await Listing.findByIdAndDelete(id);
+    console.log(delData);
+    
+    res.redirect("/listings")
+})
 // -------------------------------------------------------------------------------------
 
 

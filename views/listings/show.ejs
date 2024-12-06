@@ -13,11 +13,18 @@
     
     <li> <%= indData.description %> </li>
     <li> &#8377;<%= indData.price.toLocaleString("en-IN") %> </li>
+    <li><%= indData.image.filename %></li>
+    <li><%= indData.image.url %></li>
     <li> <%= indData.location %> </li>
     <li> <%= indData.country %> </li>
     
+    <form method="get" action="<%= indData._id %>/edit"> 
+            <button>Edit</button> 
+    </form>
     
-    
+    <form method="POST" action="<%= indData._id %>?_method=DELETE"> 
+            <button>Delete listing</button> 
+    </form>
     
 </body>
 </html>
