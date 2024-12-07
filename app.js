@@ -7,11 +7,15 @@ app.listen(3000, (req, res) => {
 
 })
 
+const ejsMate = require("ejs-mate")
 const path = require('path');
 app.set("view engine", "ejs")
-app.set("views", path.join(__dirname, "views"))
+app.engine("ejs",ejsMate)
 
+app.set("views", path.join(__dirname, "views"))
+app.use(express.static(path.join(__dirname,"public")))
 app.use(express.urlencoded({ extended: true }))
+
 
 // --------------------------------------------------------------------------------------
 

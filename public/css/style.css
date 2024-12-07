@@ -1,0 +1,16 @@
+/* body{
+    background-color: antiquewhite;
+} */
+
+.navbar{
+    height:5rem;
+    background-color:antiquewhite;
+}
+
+.fa-house-flag{
+    font-size:1.5rem;
+}
+
+.nav-link{
+    color:#222222 !important ;
+}
