@@ -1,27 +1,45 @@
 <% layout('/layouts/boilerplate.ejs') -%>
 
 
-<body>
-    
+        <body>
 
-    <h1>  <%= indData.title %> </h1>
-    
-    
-    <li> <%= indData.description %> </li>
-    <li> &#8377;<%= indData.price.toLocaleString("en-IN") %> </li>
-    <li><%= indData.image.filename %></li>
-    <li><%= indData.image.url %></li>
-    <li> <%= indData.location %> </li>
-    <li> <%= indData.country %> </li>
-    
-    <form method="get" action="<%= indData._id %>/edit"> 
-            <button>Edit</button> 
-    </form>
-    
-    <form method="POST" action="<%= indData._id %>?_method=DELETE"> 
-            <button>Delete listing</button> 
-    </form>
-    
-</body>
+                <div class="row ">
+                        <div class="col-8 offset-2">
+                                <div class="card col-6 offset-2">
+                                        <h3>
+                                                <%= indData.title %>
+                                        </h3>
+                                        <img src="<%= indData.image.url %>" class="card-img-top show-img"
+                                                alt="listing image">
+                                        <div class="card-body mb-3">
+                                                <p class="card-text">
+                                                        <b>
+                                                                <%= indData.title %>
+                                                        </b><br>
+                                                        <%= indData.description %> <br>
+                                                                &#8377;<%= indData.price.toLocaleString("en-IN") %>
+                                                                        /night <br>
+                                                                        <%= indData.location %>, &nbsp;
+                                                                                <%= indData.country %>
+                                                </p>
+
+                                        </div>
+                                        <div class="btns">
+                                                <a href="<%= indData._id %>/edit " class="btn btn-dark col-2  mb-1 edit-listing">Edit</a>
+                                                &nbsp;
+                                        <form method="POST" action="<%= indData._id %>?_method=DELETE">
+                                                <button class="btn btn-dark "> Delete</button>
+                                        </div>
+                                        
+                                </div>
+                        </div>
 
 
+
+                </div>
+
+
+
+
+                </form>
+        </body>

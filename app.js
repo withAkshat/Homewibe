@@ -67,13 +67,14 @@ app.get("/listings/new", (req, res) => {
 
 // Create Listing
 
-app.post("/listings", (req, res) => {
+app.post("/listings",  async(req, res) => {
     let listing = req.body.listing;
 
-    let newListing = new Listing(listing)
+    let newListing = await new Listing(listing)
 
     console.log(newListing);
     
+    res.redirect("/listings")
 
 
 })
