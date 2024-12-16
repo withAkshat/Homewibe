@@ -17,6 +17,7 @@ body{
 }
 
 .fa-house-flag{
+    color: rgba(172, 1, 1, 0.829) !important;
     font-size:1.5rem;
 }
 

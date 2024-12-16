@@ -7,18 +7,25 @@
 
             <div class=" col-8 offset-2">
                 <h1>Create a New Listing</h1>
-                <form method="post" action="/listings" class="form-control">
+                <form method="post" action="/listings" class="form-control needs-validation" novalidate>
 
                     <div>
                         <div class="mb-3">
                             <label for="title" class="form-label">Title</label>
-                            <input type="title" class="form-control" name="listing[title]" placeholder="A Catchy Title">
+                            <input type="title" class="form-control" name="listing[title]" placeholder="A Catchy Title" required>
+                            <div class="invalid-feedback">
+                                Please Enter a Title
+                              </div>
                         </div>
 
                         <div class="mb-3">
                             <label for="description" class="form-label">Description</label>
                             <textarea name="listing[description]" placeholder="Description"
-                                class="form-control"></textarea>
+                                class="form-control" required></textarea>
+                                <div class="invalid-feedback">
+                                    Please Enter Description
+                                  </div>
+                                
                         </div>
 
                         <div class="row mb-3">
@@ -41,14 +48,18 @@
                         <div class="row mb-4">
                             <div class="col-4">
                                 <label for="Price" class="form-label">Price</label>
-                                <input type="number" name="listing[price]" placeholder="ex.1200" class="form-control">
-    
+                                <input type="number" name="listing[price]" placeholder="ex.1200" class="form-control" required>
+                                <div class="invalid-feedback">
+                                    Needed!
+                                  </div>
                             </div>
     
                             <div class=" col-8">
                                 <label for="country" class="form-label">Country</label>
-                                <input type="text" name="listing[country]" placeholder="ex.India" class="form-control">
-    
+                                <input type="text" name="listing[country]" placeholder="ex.India" class="form-control" required>
+                                <div class="invalid-feedback">
+                                    Needed!
+                                  </div>
                             </div>
                         </div>
                         
@@ -57,7 +68,11 @@
                         <div class="mb-3">
 
                             <label for="location" class="form-label">Location</label>
-                            <input type="text" name="listing[location]" placeholder="ex.Ronawala" class="form-control">
+                            
+                            <input type="text" name="listing[location]" placeholder="ex.Ronawala" class="form-control" required> 
+                            <div class="invalid-feedback">
+                                Needed!
+                              </div>
                         </div>
 
 
@@ -68,4 +83,5 @@
                 <br><br>
             </div>
         </div>
+
     </body>
