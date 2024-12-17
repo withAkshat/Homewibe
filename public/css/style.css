@@ -123,3 +123,8 @@ body{
     background-color: red !important;
     border:none !important;
 }
+
+input[type="number"]{
+    appearance: none !important;
+    -webkit-appearance: none !important;
+}
