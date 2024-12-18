@@ -16,7 +16,7 @@ app.set("views", path.join(__dirname, "views"))
 app.use(express.static(path.join(__dirname,"public")))
 app.use(express.urlencoded({ extended: true }))
 
-
+const { listingSchema } = require("./schema.js");
 // --------------------------------------------------------------------------------------
 
 const mongoose = require('mongoose');
@@ -61,6 +61,18 @@ app.get("/listings", async (req, res) => {
 });
 
 
+const validateListing = (req,res,next)=>{
+    let { error } = listingSchema.validate(req.body);
+    
+    if(error){
+        let errMsg = error.details.map((el)=>el.message).join(",");   
+        throw new ExpressError(400 ,errMsg)
+    }else{
+        next();
+    }
+}
+
+
 // New Route
 
 app.get("/listings/new", (req, res) => {
@@ -71,19 +83,38 @@ app.get("/listings/new", (req, res) => {
 
 // Create Listing
 
-app.post("/listings", wrapAsync(async (req,res,next) => {
+app.post("/listings", validateListing, wrapAsync(async (req,res,next) => {
+    let listing = req.body.listing;
+    let newListing = new Listing(listing);
+
+    await newListing.save();
+    
+    res.redirect("/listings") 
+    // if(!req.body.listing){
+    //     throw new ExpressError(400,"Send Valid Data for listing")
+    //  }
+
 
     
-    if(!req.body.listing){
-        throw new ExpressError(400, "Bad request")
-    }
-    
-        let listing = req.body.listing;
-        let newListing =  new Listing(listing)
-        // console.log(newListing);
-        await newListing.save();
+    //     let newListing =  new Listing(listing)
+
+    //     if (!newListing.title){
+    //         throw new ExpressError(400,"Title is missing")
+    //     }
+
         
-        res.redirect("/listings") 
+    //     if (!newListing.description){
+    //         throw new ExpressError(400,"Description is missing")
+    //     }
+
+    //     if (!newListing.price){
+    //         throw new ExpressError(400,"Price is missing")
+    //     }
+
+    //     if (!newListing.location){
+    //         throw new ExpressError(400,"Location is missing")
+    //     }
+        // console.log(newListing);
 
 }));
 
@@ -114,13 +145,13 @@ app.get("/listings/:id/edit", wrapAsync(async(req,res)=>{
 
 //  Update Route
 
-app.put("/listings/:id", wrapAsync( async (req,res)=>{
+app.put("/listings/:id", validateListing , wrapAsync( async (req,res)=>{
 
     let { id } = req.params;
     // console.log({...req.body.listing });
     
     let upData = await Listing.findByIdAndUpdate( id ,{...req.body.listing });
-    console.log(upData);
+   
     
     res.redirect(`/listings/${id}`)
     
@@ -138,14 +169,15 @@ app.delete("/listings/:id", wrapAsync( async (req,res)=>{
 
 
 app.all("*",(req,res,next)=>{
-    next(new ExpressError(404,"page Not found"));
+    next(new ExpressError(404,"Page Not found"));
 })
 
 // Error Handling Path...!!
 
 app.use((err,req,res,next)=>{
-    let { status=500 ,message="Something went wrong" }= err;
-    res.status(status).send(message);
+    let { status=500 , message="Something went wrong" }= err;
+    res.status(status).render("error.ejs" , { message })
+    
     next();
 })
 
